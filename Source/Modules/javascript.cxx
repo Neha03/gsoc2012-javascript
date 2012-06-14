@@ -1,14 +1,13 @@
 #include "swigmod.h"
-
 #include <cparse.h>
 #include <parser.h>
 #include <ctype.h>
-
 #include "javascript_emitter.h"
+extern JSEmitter* create_JSC_emitter();
 
 /* ********************************************************************
- * JAVASCRIPT
- * ********************************************************************/
+* JAVASCRIPT
+* ********************************************************************/
 
 class JAVASCRIPT : public Language {
 
@@ -24,8 +23,8 @@ public:
     virtual int functionWrapper(Node *n);
 
     /**
-     *  Registers all %fragments assigned to section "templates" with the Emitter.
-     **/
+* Registers all %fragments assigned to section "templates" with the Emitter.
+**/
     virtual int fragmentDirective(Node *n);
 
     virtual void main(int argc, char *argv[]);
@@ -37,10 +36,10 @@ private:
 };
 
 /* ---------------------------------------------------------------------
- * functionWrapper()
- *
- * Low level code generator for functions 
- * --------------------------------------------------------------------- */
+* functionWrapper()
+*
+* Low level code generator for functions
+* --------------------------------------------------------------------- */
 
 int JAVASCRIPT::functionWrapper(Node *n) {
     
@@ -52,10 +51,10 @@ int JAVASCRIPT::functionWrapper(Node *n) {
 }
 
 /* ---------------------------------------------------------------------
- * functionHandler()
- *
- * Function handler for generating wrappers for functions 
- * --------------------------------------------------------------------- */
+* functionHandler()
+*
+* Function handler for generating wrappers for functions
+* --------------------------------------------------------------------- */
 
 int JAVASCRIPT::functionHandler(Node *n) {
     
@@ -69,10 +68,10 @@ int JAVASCRIPT::functionHandler(Node *n) {
 }
 
 /* ---------------------------------------------------------------------
- * globalfunctionHandler()
- *
- * Function handler for generating wrappers for functions 
- * --------------------------------------------------------------------- */
+* globalfunctionHandler()
+*
+* Function handler for generating wrappers for functions
+* --------------------------------------------------------------------- */
 
 int JAVASCRIPT::globalfunctionHandler(Node *n) {
     emitter->SwitchContext(n);
@@ -82,10 +81,10 @@ int JAVASCRIPT::globalfunctionHandler(Node *n) {
 }
 
 /* ---------------------------------------------------------------------
- * variableHandler()
- *
- * Function handler for generating wrappers for variables 
- * --------------------------------------------------------------------- */
+* variableHandler()
+*
+* Function handler for generating wrappers for variables
+* --------------------------------------------------------------------- */
 
 int JAVASCRIPT::variableHandler(Node *n) {
     
@@ -99,10 +98,10 @@ int JAVASCRIPT::variableHandler(Node *n) {
 }
 
 /* ---------------------------------------------------------------------
- * globalvariableHandler()
- *
- * Function handler for generating wrappers for global variables 
- * --------------------------------------------------------------------- */
+* globalvariableHandler()
+*
+* Function handler for generating wrappers for global variables
+* --------------------------------------------------------------------- */
 
 int JAVASCRIPT::globalvariableHandler(Node *n) {
 
@@ -113,10 +112,10 @@ int JAVASCRIPT::globalvariableHandler(Node *n) {
 }
 
 /* ---------------------------------------------------------------------
- * classHandler()
- *
- * Function handler for generating wrappers for class 
- * --------------------------------------------------------------------- */
+* classHandler()
+*
+* Function handler for generating wrappers for class
+* --------------------------------------------------------------------- */
 
 int JAVASCRIPT::classHandler(Node *n) {
     emitter->SwitchContext(n);
@@ -144,11 +143,11 @@ int JAVASCRIPT::fragmentDirective(Node *n) {
 }
 
 /* ---------------------------------------------------------------------
- * top()
- *
- * Function handler for processing top node of the parse tree 
- * Wrapper code generation essentially starts from here 
- * --------------------------------------------------------------------- */
+* top()
+*
+* Function handler for processing top node of the parse tree
+* Wrapper code generation essentially starts from here
+* --------------------------------------------------------------------- */
 
 int JAVASCRIPT::top(Node *n) {
     
@@ -165,10 +164,10 @@ int JAVASCRIPT::top(Node *n) {
 }
 
 /* ---------------------------------------------------------------------
- * main()
- *
- * Entry point for the JAVASCRIPT module
- * --------------------------------------------------------------------- */
+* main()
+*
+* Entry point for the JAVASCRIPT module
+* --------------------------------------------------------------------- */
 
 void JAVASCRIPT::main(int argc, char *argv[]) {
 
@@ -193,19 +192,19 @@ void JAVASCRIPT::main(int argc, char *argv[]) {
                 Swig_mark_arg(i);
                 mode = JSEmitter::QtScript;
                 SWIG_library_directory("javascript/qt");
-            } 
+            }
         }
     }
     
     switch(mode) {
         case JSEmitter::V8:
         {
-            // TODO: emitter = create_v8_emitter();
+            //TODO: emitter = create_v8_emitter();
             break;
         }
         case JSEmitter::JavascriptCore:
         {
-            // TODO: emitter = create_jsc_emitter();
+            emitter = create_JSC_emitter();
             break;
         }
         case JSEmitter::QtScript:
@@ -218,24 +217,24 @@ void JAVASCRIPT::main(int argc, char *argv[]) {
             Printf(stderr, "Unknown emitter type.");
             SWIG_exit(-1);
         }
-    }    
+    }
     
     
     // Add a symbol to the parser for conditional compilation
     Preprocessor_define("SWIGJAVASCRIPT 1", 0);
 
-    // Add typemap definitions    
+    // Add typemap definitions
     SWIG_typemap_lang("javascript");
 
-    // Set configuration file 
+    // Set configuration file
     SWIG_config_file("javascript.swg");
 
     allow_overloading();
 }
 
 /* -----------------------------------------------------------------------------
- * swig_JAVASCRIPT()    - Instantiate module
- * ----------------------------------------------------------------------------- */
+* swig_JAVASCRIPT() - Instantiate module
+* ----------------------------------------------------------------------------- */
 
 static Language *new_swig_javascript() {
   return new JAVASCRIPT();
@@ -244,3 +243,5 @@ static Language *new_swig_javascript() {
 extern "C" Language *swig_javascript(void) {
   return new_swig_javascript();
 }
+
+
