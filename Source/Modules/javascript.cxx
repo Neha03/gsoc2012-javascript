@@ -543,7 +543,7 @@ JSCEmitter::JSCEmitter()
 JSEmitter(), NULL_STR(NewString("NULL")), current_classname(NULL), f_header(NULL), current_classtype(NULL), f_runtime(NULL), current_class_functions(NULL),
 f_wrappers(NULL), current_getter(NULL), is_immutable(NULL), create_namespaces_code(NULL), current_classname_mangled(NULL), initializer_code(NULL),
 register_namespaces_code(NULL), f_wrap_cpp(NULL), current_setter(NULL), ctor_dispatcher_code(NULL), current_functionwrapper(NULL),
-class_static_functions_code(NULL), namespaces(NULL), function_dispatcher_code(NULL), namespaces(NULL), GLOBAL_STR(NULL), current_propertyname(NULL),
+class_static_functions_code(NULL), namespaces(NULL), function_dispatcher_code(NULL), GLOBAL_STR(NULL), current_propertyname(NULL),
 current_namespace(NULL), ctor_wrappers(NULL), class_static_variables_code(NULL), class_variables_code(NULL), f_init(NULL), current_functionname(NULL),
 current_classtype_mangled(NULL), VETO_SET(NewString("JS_veto_set_variable")) {
 }
